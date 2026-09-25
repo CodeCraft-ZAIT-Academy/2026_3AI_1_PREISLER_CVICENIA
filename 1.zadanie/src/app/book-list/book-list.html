@@ -1,0 +1,13 @@
+<section>
+  <h2>Zoznam kníh</h2>
+
+  @for (book of books; track book.id) {
+    <article class = "book-card">
+    <app-book-card [book] = "book"></app-book-card>
+    </article>
+    }@empty {
+        <p>Tutok nic neni :c kniznica dala burn out</p>
+    }
+
+    
+</section>
