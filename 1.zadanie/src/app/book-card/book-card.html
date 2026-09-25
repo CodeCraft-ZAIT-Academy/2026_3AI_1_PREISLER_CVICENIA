@@ -1,6 +1,7 @@
+ <button (click)="zobrazoblubencov()">Je medzi oblubenimi</button>
 
-@if(book().favorite) {
-<article class="book-card">
+    <article class="book-card">
+    @if(favorite && book().favorite) {
     <h3>{{ book().title }}</h3>
     <P>{{ book().author}}</P>
     @if (showDetails) {
@@ -23,7 +24,7 @@
     } @else {
     <p>Kniha je momentálne vypožičaná.</p>
     }
+
+    }
+
 </article>
-
-}
-

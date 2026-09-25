@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BookCard } from '../book-card/book-card';
 import { Book } from '../book';
 
+
 @Component({
   imports: [BookCard],
   selector: 'app-book-list',
@@ -27,7 +28,7 @@ export class BookList {
     year: 1949,
     available: false,
     genre: 'Dystopia',
-    favorite: false,
+    favorite: true,
   },
   {
     id: 3,
