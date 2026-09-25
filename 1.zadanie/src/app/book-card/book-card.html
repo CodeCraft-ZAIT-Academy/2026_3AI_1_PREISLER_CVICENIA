@@ -1,4 +1,4 @@
- <button (click)="zobrazoblubencov()">Je medzi oblubenimi</button>
+ <button (click)="zobrazoblubencov()" class="buttonon">Je medzi oblubenimi</button>
 
     <article class="book-card">
     @if(favorite && book().favorite) {
@@ -10,10 +10,10 @@
         <p>Žáner: {{ book().genre }}</p>
     </div>
     }
-    <button (click)="toggleDetails()">
+    <button (click)="toggleDetails()" class="butttttttton">
         Zobraziť / skryť detail
     </button>
-    <button [disabled]="!book().available">
+    <button [disabled]="!book().available" class="butttttttton">
         Vypožičať
         @if (!book().available) {
         <small>Kniha je momentálne vypožičaná.</small>
