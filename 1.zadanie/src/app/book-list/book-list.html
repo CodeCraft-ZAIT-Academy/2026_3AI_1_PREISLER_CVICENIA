@@ -1,13 +1,25 @@
 <section>
   <h2>Zoznam kníh</h2>
+  <h3>V kniznici je {{BookList.length}} </h3>
 
-  @for (book of books; track book.id) {
+  @for (book of BookList; track book.id) {
     <article class = "book-card">
     <app-book-card [book] = "book"></app-book-card>
     </article>
-    }@empty {
+  }@empty {
         <p>Tutok nic neni :c kniznica dala burn out</p>
-    }
+  }
+  <div class="pagination">
+    <button matButton="outlined" (click)="previousPage()" [disabled]="currentPage === 1">
+      <mat-icon>chevron_left</mat-icon>
+      Predošlá
+    </button>
 
-    
+    <span>Strana {{ currentPage }} z {{ pageCount() }}</span>
+
+    <button matButton="outlined" (click)="nextPage()" [disabled]="currentPage === pageCount()">
+      Ďalšia
+      <mat-icon >chevron_right</mat-icon>
+    </button>
+  </div>
 </section>

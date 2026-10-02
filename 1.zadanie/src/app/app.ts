@@ -1,8 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { BookList } from './book-list/book-list';
+import {  MatToolbarModule  } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  imports: [BookList],
+  imports: [BookList, MatToolbarModule, MatIconModule],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

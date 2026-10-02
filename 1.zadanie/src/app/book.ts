@@ -4,6 +4,7 @@ export interface Book {
     author: string;
     year: number;
     genre: string;
+    pages:number;
     available: boolean;
     favorite: boolean;
 }

@@ -1,30 +1,47 @@
- <button (click)="zobrazoblubencov()" class="buttonon">Je medzi oblubenimi</button>
+<mat-card class="book-card" [class.unavailable]="!book().available" [class.favorite]="!favorite"
+  [style.border-left-color]="genreColor()">
+  <mat-card-header>
+    <mat-card-title>{{ book().title }}</mat-card-title>
+    <mat-card-subtitle>{{ book().author }}</mat-card-subtitle>
+  </mat-card-header>
 
-    <article class="book-card">
-    @if(favorite && book().favorite) {
-    <h3>{{ book().title }}</h3>
-    <P>{{ book().author}}</P>
-    @if (showDetails) {
-    <div>
-        <p>Rok vydania: {{ book().year }}</p>
-        <p>Žáner: {{ book().genre }}</p>
-    </div>
-    }
-    <button (click)="toggleDetails()" class="butttttttton">
-        Zobraziť / skryť detail
-    </button>
-    <button [disabled]="!book().available" class="butttttttton">
-        Vypožičať
-        @if (!book().available) {
-        <small>Kniha je momentálne vypožičaná.</small>
-        }
-    </button>
+  <mat-card-content>
     @if (book().available) {
     <p>Kniha je dostupná.</p>
     } @else {
     <p>Kniha je momentálne vypožičaná.</p>
     }
 
+    @if (showDetails) {
+    <div>
+      <app-book-detail [book]="book()"></app-book-detail>
+    </div>
+    }
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button matButton (click)="toggleDetails()">
+      @if (showDetails) { Skryt detail
+      }
+
+      @else
+      { Zobraziť detail }
+    </button>
+
+    <button matButton="filled" [disabled]="!book().available" (click)="borrow()">
+      Vypožičať
+    </button>
+
+    @if (!book().available) {
+    <button matButton="outlined" (click)="giveBack()">Vrátiť</button>
     }
 
-</article>
+    <button matIconButton (click)="zobrazoblubencov()">
+      @if (favorite) {
+      <mat-icon class="favorite-icon">star</mat-icon>
+      } @else {
+      <mat-icon>star_border</mat-icon>
+      }
+    </button>
+  </mat-card-actions>
+</mat-card>
