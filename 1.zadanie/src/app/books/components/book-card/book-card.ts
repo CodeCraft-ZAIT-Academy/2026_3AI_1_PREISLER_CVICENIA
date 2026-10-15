@@ -21,7 +21,7 @@ export class BookCard {
     this.showDetails = !this.showDetails;
   }
 
-  zobrazoblubencov(): void {
+  toggleFavorite(): void {
     this.favorite = !this.favorite;
   }
 

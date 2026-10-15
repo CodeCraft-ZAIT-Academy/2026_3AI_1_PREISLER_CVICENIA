@@ -1,4 +1,4 @@
-<form #myForm="ngForm" (ngSubmit)="save(bookForm)" class="book-form">
+<form #bookForm="ngForm" (ngSubmit)="save(bookForm)" class="book-form">
     <mat-form-field>
         <mat-label>Názov</mat-label>
         <input matInput name="title" [(ngModel)]="draft.title" #title="ngModel" required minlength="2">
