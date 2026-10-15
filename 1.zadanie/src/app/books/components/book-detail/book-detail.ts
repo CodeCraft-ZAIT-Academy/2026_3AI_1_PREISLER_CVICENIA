@@ -12,4 +12,5 @@ import { Book } from '../../../books/book';
 })
 export class BookDetail {
   book = input.required<Book>();
+  color = input<string>();
 }

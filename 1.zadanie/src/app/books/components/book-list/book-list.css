@@ -12,3 +12,9 @@ section{
   gap: 16px;
   margin-top: 8px;
 }
+
+.mat-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

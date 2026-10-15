@@ -4,9 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Book } from '../../book';
 import {BookDetail} from '../book-detail/book-detail'; 
+import { BookForm } from '../book-form/book-form';
 
 @Component({
-  imports: [MatCardModule,MatButtonModule,MatIconModule, BookDetail],
+  imports: [MatCardModule,MatButtonModule,MatIconModule, BookDetail, BookForm],
   selector: 'app-book-card',
   styleUrl: './book-card.css',
   templateUrl: './book-card.html',
@@ -51,4 +52,35 @@ borrow(): void {
 giveBack(): void {
   this.book().available = true;
 }
+edited = output<Book>();
+
+  editing: boolean = false;
+
+  startEdit(): void {
+    this.editing = true;
+  }
+
+  saveEdit(book: Book): void {
+    this.edited.emit(book);
+    this.editing = false;
+  }
+
+  cancelEdit(): void {
+    this.editing = false;
+  }
+  deleted = output<void>();
+
+  confirmingDelete: boolean = false;
+
+  askDelete(): void {
+    this.confirmingDelete = true;
+  }
+
+  cancelDelete(): void {
+    this.confirmingDelete = false;
+  }
+
+  confirmDelete(): void {
+    this.deleted.emit();
+  }
 }
