@@ -4,7 +4,7 @@ import { Book } from '../../book';
 import { generateBooks } from '../../book-generator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Cart } from '../../../cart/cart';
+import { Cart } from '../../../cart/components/cart/cart';
 
 
 @Component({
