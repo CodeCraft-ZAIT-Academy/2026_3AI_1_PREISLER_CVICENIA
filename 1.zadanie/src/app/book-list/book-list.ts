@@ -4,10 +4,11 @@ import { Book } from '../book';
 import { generateBooks } from '../book-generator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { Cart } from '../cart/cart';
 
 
 @Component({
-  imports: [BookCard, MatButtonModule,MatIconModule ],
+  imports: [BookCard, MatButtonModule,MatIconModule, Cart ],
   selector: 'app-book-list',
   styleUrl: './book-list.css',
   templateUrl: './book-list.html',
@@ -48,6 +49,7 @@ export class BookList {
   }
 
 ];
+
 BookList: Book[] = this.books.concat(generateBooks(40,4));
 
 currentPage: number = 1
@@ -72,5 +74,14 @@ isOnCurrentpage(index:number): boolean {
       this.currentPage++;
     }
   }
+
+  borrowedBooks(): Book[] {
+  return this.BookList.filter(book => !book.available);
+  }
+
+  giveBack(book: Book): void {
+  const index = this.BookList.indexOf(book);
+  this.BookList[index] = { ...book, available: true };
+ }
 
 }

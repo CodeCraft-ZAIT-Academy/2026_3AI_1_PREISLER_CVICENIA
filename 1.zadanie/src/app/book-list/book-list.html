@@ -1,11 +1,13 @@
 <section>
+  <app-cart [books]="borrowedBooks()"></app-cart>
+
   <h2>Zoznam kníh</h2>
   <h3>V kniznici je {{BookList.length}} </h3>
 
-  @for (book of BookList; track book.id) {
-    <article class = "book-card">
-    <app-book-card [book] = "book"></app-book-card>
-    </article>
+  @for (book of BookList; track book.id; let i = $index) {
+   @if (isOnCurrentpage(i)) {
+      <app-book-card [book]="book"></app-book-card>
+    }
   }@empty {
         <p>Tutok nic neni :c kniznica dala burn out</p>
   }
