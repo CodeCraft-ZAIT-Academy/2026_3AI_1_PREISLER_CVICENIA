@@ -83,5 +83,8 @@ isOnCurrentpage(index:number): boolean {
   const index = this.BookList.indexOf(book);
   this.BookList[index] = { ...book, available: true };
  }
-
+borrow(book: Book): void {
+  const index = this.books.indexOf(book);
+  this.books[index] = { ...book, available: false };
+}
 }

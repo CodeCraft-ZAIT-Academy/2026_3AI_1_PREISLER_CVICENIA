@@ -1,6 +1,5 @@
 <section>
-  <app-cart [books]="borrowedBooks()"></app-cart>
-
+ <app-cart [books]="borrowedBooks()" (returned)="giveBack($event)"></app-cart>
   <h2>Zoznam kníh</h2>
   <h3>V kniznici je {{BookList.length}} </h3>
 
