@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -12,6 +12,7 @@ import { BookForm } from '../book-form/book-form';
 import { Cart } from '../../../cart/components/cart/cart';
 import { Book } from '../../book';
 import { generateBooks } from '../../book-generator';
+import { BookService } from '../../book.service';
 
 @Component({
   selector: 'app-book-list',
@@ -32,6 +33,7 @@ import { generateBooks } from '../../book-generator';
   styleUrl: './book-list.css'
 })
 export class BookList {
+  private bookService = inject(BookService);
   myBooks: Book[] = [
     {
       id: 1,
@@ -51,7 +53,7 @@ export class BookList {
       year: 1949,
       available: false,
       genre: 'Dystopia',
-    
+
       pages: 328,
       favorite: false
     },
@@ -68,9 +70,9 @@ export class BookList {
     }
   ];
 
-  maxBorrowed: number = 10;
+  maxBorrowed: number = this.bookService.maxBorrowed;
 
-  books: Book[] = this.limitBorrowed(this.myBooks.concat(generateBooks(40, 4)));
+  books: Book[] = this.bookService.getBooks();
 
   limitBorrowed(books: Book[]): Book[] {
     let borrowedCount = 0;
@@ -123,42 +125,47 @@ export class BookList {
     this.searchText = '';
     this.firstPage();
   }
+  refreshBooks(): void {
+    this.books = this.bookService.getBooks();
+  }
 
   addBook(book: Book): void {
-    const maxId = Math.max(0, ...this.books.map(b => b.id));
-    this.books = [{ ...book, id: maxId + 1 }, ...this.books];
+    this.bookService.addBook(book);
+    this.refreshBooks();
     this.firstPage();
   }
 
   updateBook(updated: Book): void {
-    this.books = this.books.map(book => book.id === updated.id ? updated : book);
+    this.bookService.updateBook(updated)
+    this.refreshBooks();
   }
 
   deleteBook(deleted: Book): void {
-    this.books = this.books.filter(book => book.id !== deleted.id);
-
-    if (this.currentPage > this.pageCount()) {
-      this.lastPage();
-    }
+    this.bookService.deleteBook(deleted.id)
+    this.refreshBooks();
+    if (this.currentPage > this.pageCount()) this.lastPage();
+  }
+  
+  zobrazoblubencov(book: Book): void {
+    this.bookService.toggleFavorite(book.id);
+    this.refreshBooks();
   }
 
   borrowedBooks(): Book[] {
-    return this.books.filter(book => !book.available);
+    return this.bookService.borrowedBooks();
   }
 
   borrow(book: Book): void {
-    if (this.borrowedBooks().length >= this.maxBorrowed) {
+    if (!this.bookService.borrowBook(book.id)) {
       alert(`Naraz môžeš mať požičaných najviac ${this.maxBorrowed} kníh. Najskôr nejakú vráť.`);
       return;
     }
-
-    const index = this.books.indexOf(book);
-    this.books[index] = { ...book, available: false };
+    this.refreshBooks();
   }
 
   giveBack(book: Book): void {
-    const index = this.books.indexOf(book);
-    this.books[index] = { ...book, available: true };
+    this.bookService.returnBook(book.id);
+    this.refreshBooks();
   }
 
   currentPage: number = 1;
