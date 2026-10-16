@@ -97,28 +97,11 @@ export class BookList {
   sortBy: string = 'none';
 
   visibleBooks(): Book[] {
-    const text = this.searchText.trim().toLowerCase();
-
-    let result = this.books.filter(book =>
-      book.title.toLowerCase().includes(text) || book.author.toLowerCase().includes(text)
+    return this.bookService.getFilteredBooks(
+      this.searchText,
+      this.availability,
+      this.sortBy,
     );
-
-    if (this.availability === 'available') {
-      result = result.filter(book => book.available);
-    } else if (this.availability === 'borrowed') {
-      result = result.filter(book => !book.available);
-    }
-
-    switch (this.sortBy) {
-      case 'title':
-        result = [...result].sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case 'year':
-        result = [...result].sort((a, b) => b.year - a.year);
-        break;
-    }
-
-    return result;
   }
 
   clearSearch(): void {
