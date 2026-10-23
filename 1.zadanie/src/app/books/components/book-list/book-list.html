@@ -73,12 +73,11 @@
     }
   </div>
 
-  @for (book of pagedBooks(); track book.id; let i = $index) {
-  @if (isOnCurrentPage(i)) {
+  @for (book of pagedBooks(); track book.id) {
+  
   <app-book-card [book]="book" (borrowed)="borrow(book)" (returned)="giveBack(book)" (edited)="updateBook($event)"
     (deleted)="deleteBook(book)">
   </app-book-card>
-  }
   } @empty {
   @if (books.length === 0) {
   <p class="empty">V knižnici zatiaľ nie sú žiadne knihy.</p>
