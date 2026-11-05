@@ -16,6 +16,9 @@ import { getGenreColor } from '../../genre.colors';
 export class BookCard {
   book = input.required<Book>();
   favorite = output<void>();
+  borrowed = output<void>();
+  returned = output<void>();
+  edited = output<Book>();
   readonly showDetails = signal(false);
   readonly editing = signal(false);
   readonly confirmingDelete = signal(false);
@@ -26,19 +29,19 @@ export class BookCard {
 
   zobrazoblubencov(): void {
     this.favorite.emit();
+    
   }
 
   genreColor(): string {
     return getGenreColor(this.book().genre);
   }
   borrow(): void {
-    this.book().available = false;
+    this.borrowed.emit();
   }
 
   giveBack(): void {
-    this.book().available = true;
+    this.returned.emit();
   }
-  edited = output<Book>();
 
   startEdit(): void { this.editing.set(true); }
 

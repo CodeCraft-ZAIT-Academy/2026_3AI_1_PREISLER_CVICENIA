@@ -39,6 +39,7 @@ export class BookForm {
   }
 
   save(form: NgForm): void {
+    this.saved.emit(this.draft);
     this.draft = createEmptyBook();
     form.resetForm(this.draft);
   }

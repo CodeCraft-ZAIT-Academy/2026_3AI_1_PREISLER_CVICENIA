@@ -75,7 +75,7 @@
 
   @for (book of pagedBooks(); track book.id) {
   
-  <app-book-card [book]="book" (borrowed)="borrow(book)" (returned)="giveBack(book)" (edited)="updateBook($event)"
+  <app-book-card [book]="book" (favorite)="zobrazoblubencov(book)" (borrowed)="borrow(book)" (returned)="giveBack(book)" (edited)="updateBook($event)"
     (deleted)="deleteBook(book)">
   </app-book-card>
   } @empty {
