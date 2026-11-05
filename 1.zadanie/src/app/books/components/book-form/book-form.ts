@@ -1,4 +1,4 @@
-import { Component,input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,13 +18,13 @@ import { createEmptyBook } from '../../book.factory';
 export class BookForm {
   book = input<Book>();
   saved = output<Book>();
-   cancelled = output<void>();
+  cancelled = output<void>();
 
   genres: string[] = GENRES;
   currentYear: number = new Date().getFullYear();
 
   draft: Book = createEmptyBook();
-  
+
 
   ngOnInit(): void {
     const book = this.book();
@@ -39,6 +39,9 @@ export class BookForm {
   }
 
   save(form: NgForm): void {
+    if (form.invalid) {
+    return;
+  }
     this.saved.emit(this.draft);
     this.draft = createEmptyBook();
     form.resetForm(this.draft);
