@@ -27,8 +27,8 @@
   <h2>Zoznam kníh</h2>
   <h2>{{totalBooks() }}</h2>
   <h2>{{availableBooks.length }}</h2>
-  <button (click)="resetFilters()">Reset</button>
-  <button (click)="favoritesOnly.update(v => !v)">
+  <button class="Reset_butt" (click)="resetFilters()">Reset</button>
+  <button class="Favo_butt" (click)="favoritesOnly.update(v => !v)">
     {{ favoritesOnly() ? 'Všetky' : 'Iba obľúbené' }}
   </button>
 
@@ -44,13 +44,13 @@
       }
     </mat-form-field>
 
-    <mat-button-toggle-group name="availability" [(ngModel)]="availability" (ngModelChange)="firstPage()">
+    <mat-button-toggle-group  name="availability" [(ngModel)]="availability" (ngModelChange)="firstPage()">
       <mat-button-toggle value="all">Všetky</mat-button-toggle>
       <mat-button-toggle value="available">Dostupné</mat-button-toggle>
       <mat-button-toggle value="borrowed">Vypožičané</mat-button-toggle>
     </mat-button-toggle-group>
 
-    <mat-form-field>
+    <mat-form-field class="searcho">
       <mat-label>Zoradiť podľa</mat-label>
       <mat-select name="sortBy" [(ngModel)]="sortBy" (ngModelChange)="firstPage()">
         <mat-option value="none">Bez zoradenia</mat-option>

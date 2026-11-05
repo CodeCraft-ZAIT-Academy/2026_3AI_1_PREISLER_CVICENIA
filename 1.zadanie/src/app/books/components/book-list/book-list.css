@@ -1,10 +1,12 @@
-h2{
-    text-align: center;
+h2 {
+  text-align: center;
 }
-section{
-    justify-content: center;
+
+section {
+  justify-content: center;
 
 }
+
 .pagination {
   display: flex;
   align-items: center;
@@ -17,4 +19,33 @@ section{
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.Reset_butt {
+  width: 250px;
+  padding: 5px;
+  font-size: 20px;
+  margin-right:50px ;
+  margin-bottom: 25px;
+  justify-content: center;
+  align-items: center;
+}
+
+.Favo_butt {
+  width: 250px;
+  padding: 5px;
+  font-size: 20px;
+  margin-bottom: 25px;
+  justify-content: center;
+  align-items: center;
+}
+
+.search{
+  width: 350px;
+  padding-right: 50px;
+}
+
+.searcho{
+  width: 350px;
+  padding-left: 50px;
 }
