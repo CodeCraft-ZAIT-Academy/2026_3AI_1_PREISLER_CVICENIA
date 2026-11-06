@@ -1,8 +1,22 @@
 <mat-toolbar class="toolbar">
-<mat-icon>menu_book</mat-icon>
-<h1>Library Management System</h1>
+    <mat-icon>menu_book</mat-icon>
+    <h1>Library Management System</h1>
 
-</mat-toolbar >
+    <a matIconButton routerLink="/books" routerLinkActive="active" color="accent">
+        <mat-icon>auto_stories</mat-icon>
+    </a>
+    <a matIconButton routerLink="/cart" routerLinkActive="active" color="accent">
+        <mat-icon [matBadge]="borrowedBooks().length" [matBadgeHidden]="borrowedBooks().length === 0">
+           shopping_cart
+        </mat-icon>
+
+    </a>
+    <a matIconButton routerLink="/cart" routerLinkActive="active" color="accent">
+        <mat-icon>admin_panel_settings</mat-icon>
+    </a>
 
 
-<app-book-list></app-book-list>
+</mat-toolbar>
+<main>
+    <router-outlet></router-outlet>
+</main>

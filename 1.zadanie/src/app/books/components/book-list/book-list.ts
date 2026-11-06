@@ -9,7 +9,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
 import { BookCard } from '../book-card/book-card';
 import { BookForm } from '../book-form/book-form';
-import { Cart } from '../../../cart/components/cart/cart';
 import { Book } from '../../book';
 import { generateBooks } from '../../book-generator';
 import { BookService } from '../../book.service';
@@ -19,7 +18,6 @@ import { BookService } from '../../book.service';
   imports: [
     BookCard,
     BookForm,
-    Cart,
     FormsModule,
     MatButtonModule,
     MatIconModule,
@@ -27,7 +25,7 @@ import { BookService } from '../../book.service';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
   ],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css'

@@ -3,7 +3,7 @@ import { Book } from '../books/book';
 
 export function generateBooks(count: number, firstID: number): Book[] {
     const book: Book[] = [];
-
+    faker.seed(123);
     for(let i = 0; i< count; i++){
         book.push({
             id: firstID +i,
@@ -14,6 +14,7 @@ export function generateBooks(count: number, firstID: number): Book[] {
             available: faker.datatype.boolean(),
             genre: faker.book.genre(),
             favorite: faker.datatype.boolean(),
+
         });
     }
 

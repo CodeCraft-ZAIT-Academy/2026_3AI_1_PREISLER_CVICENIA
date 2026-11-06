@@ -6,9 +6,11 @@ import { Book } from '../../book';
 import { BookDetail } from '../book-detail/book-detail';
 import { BookForm } from '../book-form/book-form';
 import { getGenreColor } from '../../genre.colors';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
 
 @Component({
-  imports: [MatCardModule, MatButtonModule, MatIconModule, BookDetail, BookForm],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, BookDetail, BookForm,RouterLink,],
   selector: 'app-book-card',
   styleUrl: './book-card.css',
   templateUrl: './book-card.html',
