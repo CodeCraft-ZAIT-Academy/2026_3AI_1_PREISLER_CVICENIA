@@ -17,7 +17,6 @@ import { BookService } from '../../book.service';
   selector: 'app-book-list',
   imports: [
     BookCard,
-    BookForm,
     FormsModule,
     MatButtonModule,
     MatIconModule,

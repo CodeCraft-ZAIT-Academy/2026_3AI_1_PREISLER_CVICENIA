@@ -1,1 +1,52 @@
-<p>admin-books works!</p>
+<div class="admin-container">
+  <div class="admin-header">
+    <h2>Správa kníh (Admin)</h2>
+    <button mat-flat-button color="primary" routerLink="/admin/new">
+      <mat-icon>add</mat-icon> Pridať knihu
+    </button>
+  </div>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Číslo</th>
+        <th>Názov</th>
+        <th>Autor</th>
+        <th>Rok</th>
+        <th>Stav</th>
+        <th>Akcie</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (book of books(); track book.id) {
+        <tr>
+          <td>{{ book.id }}</td>
+          <td>
+            <a [routerLink]="['/books', book.id]">{{ book.title }}</a>
+          </td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.year }}</td>
+          <td>
+            <span class="badge" [class.borrowed]="!book.available">
+              {{ book.available ? 'Dostupná' : 'Požičaná' }}
+            </span>
+          </td>
+          <td>
+            @if (confirmingDeleteId() === book.id) {
+              <span class="confirm-text">Naozaj zmazať?</span>
+              <button mat-button (click)="cancelDelete()">Nie</button>
+              <button mat-flat-button color="warn" (click)="confirmDelete(book)">Áno</button>
+            } @else {
+              <a mat-icon-button [routerLink]="['/admin', book.id, 'edit']" aria-label="Upraviť">
+                <mat-icon>edit</mat-icon>
+              </a>
+              <button mat-icon-button color="warn" (click)="askDelete(book)" aria-label="Zmazať">
+                <mat-icon>delete</mat-icon>
+              </button>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

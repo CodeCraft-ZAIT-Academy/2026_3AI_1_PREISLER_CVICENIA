@@ -1,17 +1,4 @@
 <section>
-  <mat-accordion multi>
-    <mat-expansion-panel #addPanel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon>add_circle</mat-icon>
-          Pridať knihu
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <app-book-form (saved)="addBook($event); addPanel.close()"></app-book-form>
-    </mat-expansion-panel>
-  </mat-accordion>
-
   <h2>Zoznam kníh</h2>
   <h2>{{totalBooks() }}</h2>
   <h2>{{availableBooks.length }}</h2>
