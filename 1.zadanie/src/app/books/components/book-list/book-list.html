@@ -48,6 +48,8 @@
     }
   </div>
 
+  <app-server-book-list />
+
   @for (book of pagedBooks(); track book.id) {
   
   <app-book-card [book]="book" (favorite)="zobrazoblubencov(book)" (borrowed)="borrow(book)" (returned)="giveBack(book)" (edited)="updateBook($event)"

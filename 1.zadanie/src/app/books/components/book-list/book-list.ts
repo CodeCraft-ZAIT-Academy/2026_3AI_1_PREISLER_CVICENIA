@@ -12,6 +12,7 @@ import { BookForm } from '../book-form/book-form';
 import { Book } from '../../book';
 import { generateBooks } from '../../book-generator';
 import { BookService } from '../../book.service';
+import { ServerBookList } from '../server-book-list/server-book-list';
 
 @Component({
   selector: 'app-book-list',
@@ -25,6 +26,7 @@ import { BookService } from '../../book.service';
     MatInputModule,
     MatSelectModule,
     MatButtonToggleModule,
+    ServerBookList
   ],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css'
