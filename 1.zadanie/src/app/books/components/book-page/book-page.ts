@@ -27,6 +27,10 @@ export class BookPage {
 
   borrow(book: any): void {
     this.bookService.borrowBook(book.id);
+    if (!this.bookService.borrowBook(book.id)) {
+      alert(`Naraz môžeš mať požičaných najviac 10 kníh. Najskôr nejakú vráť.`);
+      return;
+    }
   }
 
   returnBook(book: any): void {
