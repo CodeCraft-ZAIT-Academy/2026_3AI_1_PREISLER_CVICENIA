@@ -15,6 +15,7 @@ import { BookService } from '../../book.service';
 import { ServerBookList } from '../server-book-list/server-book-list';
 import { BookFilterPipe } from '../../book-filter-pipe';
 
+
 @Component({
   selector: 'app-book-list',
   imports: [

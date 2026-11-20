@@ -5,6 +5,7 @@ import { filter } from 'rxjs';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { BookApiService } from './book-api.service';
 import { of } from 'rxjs';
+import { BookList } from '../books/components/book-list/book-list';
 
 
 @Injectable({ providedIn: 'root' })
@@ -20,11 +21,28 @@ export class BookService {
     readonly availableBooks = computed(() => this.books().filter(book => book.available));
     readonly favoriteBooks = computed(() => this.books().filter(book => book.favorite));
 
+   
+
+    private readonly favoritesKey = 'favoriteBookIds';
+
+    private saveFavoriteIds(): void {
+        const ids = this.books().filter(book => book.favorite).map(book => book.id);
+        localStorage.setItem(this.favoritesKey, JSON.stringify(ids));
+    }
+
+    toggleFavorite(id: number): void {
+        this._books.update(books =>
+            books.map(book => book.id === id ? { ...book, favorite: !book.favorite } : book)
+        );
+        this.saveFavoriteIds();
+    }
+
     constructor() {
         this.bookApi.getBooks().subscribe({
             next: books => {
                 this._books.set(this.limitBorrowed(books));
                 this.loading.set(false);
+                this._books.set(this.limitBorrowed(this.applySavedFavorites(books)));
             },
             error: error => {
                 console.error('Načítanie kníh zo servera zlyhalo:', error);
@@ -84,12 +102,6 @@ export class BookService {
         this._books.update(books =>
             books.map(book => book.id === id
                 ? { ...book, available: true } : book)
-        );
-    }
-    toggleFavorite(id: number): void {
-        this._books.update(books =>
-            books.map(book => book.id === id
-                ? { ...book, favorite: !book.favorite } : book)
         );
     }
     getFilteredBooks(
@@ -160,4 +172,23 @@ export class BookService {
                 return result;
         }
     }
+    private loadFavoriteIds(): number[] {
+        const saved = localStorage.getItem(this.favoritesKey);
+        if (!saved) return [];
+
+        try {
+            const ids = JSON.parse(saved);
+            return Array.isArray(ids) ? ids : [];
+        } catch {
+            return [];
+        }
+    }
+
+    private applySavedFavorites(books: Book[]): Book[] {
+        const ids = this.loadFavoriteIds();
+        return books.map(book => ({ ...book, favorite: ids.includes(book.id) }));
+    }
+
+
+
 }
