@@ -1,7 +1,10 @@
 <section>
   <h2>Zoznam kníh</h2>
-  <h2>{{totalBooks() }}</h2>
-  <h2>{{availableBooks.length }}</h2>
+  <p class="stats">
+    Všetkých kníh: {{ totalBooks() }}
+    · Dostupných: {{ (books() | bookFilter: '' : 'available').length }}
+    · Obľúbených: {{ (books() | bookFilter: '' : 'all' : true).length }}
+  </p>
   <button class="Reset_butt" (click)="resetFilters()">Reset</button>
   <button class="Favo_butt" (click)="favoritesOnly.update(v => !v)">
     {{ favoritesOnly() ? 'Všetky' : 'Iba obľúbené' }}
@@ -19,7 +22,7 @@
       }
     </mat-form-field>
 
-    <mat-button-toggle-group  name="availability" [(ngModel)]="availability" (ngModelChange)="firstPage()">
+    <mat-button-toggle-group name="availability" [(ngModel)]="availability" (ngModelChange)="firstPage()">
       <mat-button-toggle value="all">Všetky</mat-button-toggle>
       <mat-button-toggle value="available">Dostupné</mat-button-toggle>
       <mat-button-toggle value="borrowed">Vypožičané</mat-button-toggle>
@@ -48,15 +51,17 @@
     }
   </div>
 
-  <app-server-book-list />
-
   @for (book of pagedBooks(); track book.id) {
-  
-  <app-book-card [book]="book" (favorite)="zobrazoblubencov(book)" (borrowed)="borrow(book)" (returned)="giveBack(book)" (edited)="updateBook($event)"
-    (deleted)="deleteBook(book)">
+
+  <app-book-card [book]="book" (favorite)="zobrazoblubencov(book)" (borrowed)="borrow(book)" (returned)="giveBack(book)"
+    (edited)="updateBook($event)" (deleted)="deleteBook(book)">
   </app-book-card>
   } @empty {
-  @if (books.length === 0) {
+  @if (loading()) {
+  <p role="status">Načítavam knihy…</p>
+  } @else if (loadError()) {
+  <p role="alert">{{ loadError() }}</p>
+  } @else if (books().length === 0) {
   <p class="empty">V knižnici zatiaľ nie sú žiadne knihy.</p>
   } @else {
   <p class="empty">Nenašli sa žiadne knihy. Skús zmeniť hľadanie alebo filter.</p>

@@ -13,6 +13,7 @@ import { Book } from '../../book';
 import { generateBooks } from '../../book-generator';
 import { BookService } from '../../book.service';
 import { ServerBookList } from '../server-book-list/server-book-list';
+import { BookFilterPipe } from '../../book-filter-pipe';
 
 @Component({
   selector: 'app-book-list',
@@ -26,13 +27,17 @@ import { ServerBookList } from '../server-book-list/server-book-list';
     MatInputModule,
     MatSelectModule,
     MatButtonToggleModule,
-    ServerBookList
+    ServerBookList,
+    BookFilterPipe
   ],
+  providers: [BookFilterPipe],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css'
 })
 export class BookList {
   private bookService = inject(BookService);
+  private bookFilter = inject(BookFilterPipe);
+  readonly books = this.bookService.books;
   myBooks: Book[] = [
     {
       id: 1,
@@ -71,7 +76,9 @@ export class BookList {
 
   readonly maxBorrowed = this.bookService.maxBorrowed;
 
-  readonly books = this.bookService.books;
+  readonly loading = this.bookService.loading;
+  readonly loadError = this.bookService.loadError;
+
 
   limitBorrowed(books: Book[]): Book[] {
     let borrowedCount = 0;
@@ -96,15 +103,6 @@ export class BookList {
   readonly sortBy = signal('none');
   readonly favoritesOnly = signal(false);
 
-  readonly visibleBooks = computed(() => {
-    const list = this.bookService.getFilteredBooks(
-      this.searchText(),
-      this.availability(),
-      this.sortBy()
-
-    )
-    return this.favoritesOnly() ? list.filter(b => b.favorite) : list;
-  });
 
   clearSearch(): void {
     this.searchText.set('');
@@ -209,4 +207,13 @@ export class BookList {
     const start = (this.currentPage() - 1) * this.pageSize();
     return this.visibleBooks().slice(start, start + this.pageSize());
   });
+  readonly visibleBooks = computed(() =>
+    this.bookFilter.transform(
+      this.bookService.getSortedBooks(this.sortBy()),
+      this.searchText(),
+      this.availability(),
+      this.favoritesOnly()
+    )
+  );
+ 
 }

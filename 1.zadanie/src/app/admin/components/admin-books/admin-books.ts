@@ -27,6 +27,9 @@ export class AdminBooks {
     this.confirmingDeleteId.set(book.id);
   }
 
+  readonly loading = this.bookService.loading;
+  readonly loadError = this.bookService.loadError;
+
   cancelDelete(): void {
     this.confirmingDeleteId.set(undefined);
   }

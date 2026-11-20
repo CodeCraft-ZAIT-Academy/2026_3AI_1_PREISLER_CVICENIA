@@ -6,6 +6,28 @@
     </button>
   </div>
 
+  @if (!loading() && !loadError()) {
+  <a matButton="filled" routerLink="/admin/new">Pridať knihu</a>
+  }
+
+  @if (loading()) {
+  <tr>
+    <td colspan="6" role="status">Načítavam knihy…</td>
+  </tr>
+  } @else if (loadError()) {
+  <tr>
+    <td colspan="6" role="alert">{{ loadError() }}</td>
+  </tr>
+  } @else {
+  @for (book of books(); track book.id) {
+  <!-- ponechaj existujúci riadok tabuľky -->
+  } @empty {
+  <tr>
+    <td colspan="6">V knižnici zatiaľ nie sú žiadne knihy.</td>
+  </tr>
+  }
+  }
+
   <table class="admin-table">
     <thead>
       <tr>
@@ -18,34 +40,48 @@
       </tr>
     </thead>
     <tbody>
+      @if (loading()) {
+      <tr>
+        <td colspan="6" role="status">Načítavam knihy…</td>
+      </tr>
+      } @else if (loadError()) {
+      <tr>
+        <td colspan="6" role="alert">{{ loadError() }}</td>
+      </tr>
+      } @else {
       @for (book of books(); track book.id) {
-        <tr>
-          <td>{{ book.id }}</td>
-          <td>
-            <a [routerLink]="['/books', book.id]">{{ book.title }}</a>
-          </td>
-          <td>{{ book.author }}</td>
-          <td>{{ book.year }}</td>
-          <td>
-            <span class="badge" [class.borrowed]="!book.available">
-              {{ book.available ? 'Dostupná' : 'Požičaná' }}
-            </span>
-          </td>
-          <td>
-            @if (confirmingDeleteId() === book.id) {
-              <span class="confirm-text">Naozaj zmazať?</span>
-              <button mat-button (click)="cancelDelete()">Nie</button>
-              <button mat-flat-button color="warn" (click)="confirmDelete(book)">Áno</button>
-            } @else {
-              <a mat-icon-button [routerLink]="['/admin', book.id, 'edit']" aria-label="Upraviť">
-                <mat-icon>edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn" (click)="askDelete(book)" aria-label="Zmazať">
-                <mat-icon>delete</mat-icon>
-              </button>
-            }
-          </td>
-        </tr>
+      <tr>
+        <td>{{ book.id }}</td>
+        <td>
+          <a [routerLink]="['/books', book.id]">{{ book.title }}</a>
+        </td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.year }}</td>
+        <td>
+          <span class="badge" [class.borrowed]="!book.available">
+            {{ book.available ? 'Dostupná' : 'Požičaná' }}
+          </span>
+        </td>
+        <td>
+          @if (confirmingDeleteId() === book.id) {
+          <span class="confirm-text">Naozaj zmazať?</span>
+          <button mat-button (click)="cancelDelete()">Nie</button>
+          <button mat-flat-button color="warn" (click)="confirmDelete(book)">Áno</button>
+          } @else {
+          <a mat-icon-button [routerLink]="['/admin', book.id, 'edit']" aria-label="Upraviť">
+            <mat-icon>edit</mat-icon>
+          </a>
+          <button mat-icon-button color="warn" (click)="askDelete(book)" aria-label="Zmazať">
+            <mat-icon>delete</mat-icon>
+          </button>
+          }
+        </td>
+      </tr>
+      } @empty {
+      <tr>
+        <td colspan="6">V knižnici zatiaľ nie sú žiadne knihy.</td>
+      </tr>
+      }
       }
     </tbody>
   </table>

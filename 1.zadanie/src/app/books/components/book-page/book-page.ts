@@ -24,9 +24,11 @@ export class BookPage {
   private bookService = inject(BookService);
   id = input.required<string>();
   readonly book = computed(() => this.bookService.getBookById(Number(this.id())));
+  readonly loading = this.bookService.loading;
+  readonly loadError = this.bookService.loadError;
 
   borrow(book: any): void {
-    this.bookService.borrowBook(book.id);
+    //this.bookService.borrowBook(book.id);
     if (!this.bookService.borrowBook(book.id)) {
       alert(`Naraz môžeš mať požičaných najviac 10 kníh. Najskôr nejakú vráť.`);
       return;
